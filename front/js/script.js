@@ -18,7 +18,6 @@ fetch("http://localhost:3000/api/products")
     });
 
 function generateCardCanape() {
-    console.log(blockOfCanape);
     for (let canape of listCanape){
         let canapeCard = document.createElement("a");
         canapeCard.href = "./product.html?id="+canape._id;
@@ -39,7 +38,6 @@ function generateCardCanape() {
         canapeArticle.appendChild(canapeDescription);
         canapeCard.appendChild(canapeArticle);
         blockOfCanape.appendChild(canapeCard);
-
     }
 }
 
