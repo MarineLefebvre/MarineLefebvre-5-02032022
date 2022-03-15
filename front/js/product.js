@@ -82,7 +82,6 @@ function ajouterAuPanier() {
     }
 
     /*
-    3. Si OK, on ajoute la ligne du panier produit + la quantité + l'option (couleur) dans le localStorage au format JSON
     4. Un utilisateur doit pouvoir modifier une quantité pour un produit donné, donc la ligne du panier doit pouvoir etre identifié par le produit + sa couleur
     5. afficher un message alrtant l'utilisateur que son produit est bien dans son panier
      */
