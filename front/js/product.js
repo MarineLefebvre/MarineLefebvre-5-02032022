@@ -74,11 +74,31 @@ function ajouterAuPanier() {
 
     //Sinon traitement
     else{
-        //création objet JSON qui contient le canape, la qty et la couleur
-        let JSONObject = '{"canape":'+JSON.stringify(canape)+',"qty":'+quantityValue+', "couleur":"'+colorValue+'"}';
-        //ajout du JSON dans le localStorage avec comme clef canapeCouleur
-        localStorage.setItem(canape.name+colorValue,JSONObject);
-        alert("L'article a bien été ajouté au panier !");
+        //Mise à jour de la quantité si élément déja dans le panier
+        if (localStorage.getItem(canape._id+colorValue)){
+            //récupérer objet du localstorage et le mettre sous forme d'objet pour le modifier
+            let objectParse=JSON.parse(localStorage.getItem(canape._id+colorValue));
+            //Parseint pour transformer la chaine de caractère en chiffre
+            objectParse.qty=parseInt(objectParse.qty)+parseInt(quantityValue);
+            let JSONObject = JSON.stringify(objectParse);
+            localStorage.setItem(canape._id+colorValue,JSONObject);
+            alert("Le nombre d'article a été mis à jour");
+        }
+        //Sinon ajout dans le panier
+        else{
+            //création objet JSON qui contient le canape, la qty et la couleur
+            let object={
+                canape:canape,
+                qty:quantityValue,
+                couleur:colorValue
+            };
+
+            let JSONObject = JSON.stringify(object);
+            //ajout du JSON dans le localStorage avec comme clef canapeCouleur
+            localStorage.setItem(canape._id+colorValue,JSONObject);
+            alert("L'article a bien été ajouté au panier");
+        }
+
     }
 
     /*
