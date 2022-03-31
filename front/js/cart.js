@@ -2,8 +2,6 @@ let sectionCart = document.getElementById("cart__items");
 let qtyTotal = 0;
 let prixTotal = 0;
 
-//TODO changer qty
-//TODO supprimer article
 
 //parcours du local storage
 for( let i = 0; i < localStorage.length; i++){
@@ -47,12 +45,19 @@ function getInfosOfCanape(id,qty,color){
 
 }
 
+async function getPrice(id) {
+
+    const response = await fetch("http://localhost:3000/api/products/"+id);
+    const canape = await response.json();
+    return canape.price;
+}
+
 function generatePanier(canape,qty,color){
     //article
     let canapeArticle = document.createElement("article");
     canapeArticle.className="cart__item";
-    canapeArticle.id = canape._id;
-    canapeArticle.color=color;
+    canapeArticle.dataset.id = canape._id;
+    canapeArticle.dataset.color=color;
 
     //div-img
     let canapeDiv = document.createElement("div");
@@ -105,7 +110,7 @@ function generatePanier(canape,qty,color){
 
     //qty
     let canapeQty= document.createElement("p");
-    let canapeQtyText=document.createTextNode(qty);
+    let canapeQtyText=document.createTextNode("Qté : ");
     canapeQty.appendChild(canapeQtyText);
     canapeDivQtyContent.appendChild(canapeQty);
 
@@ -123,6 +128,7 @@ function generatePanier(canape,qty,color){
     canapeInputQty.addEventListener("change", updateQty);
     //ajout de paramètre => ici la clef du localStorage
     canapeInputQty.clef = canape._id+color;
+    canapeInputQty.price = canape.price;
 
     //supprimer article
     let canapeDivDel= document.createElement("div");
@@ -136,6 +142,8 @@ function generatePanier(canape,qty,color){
     deleteCanape.addEventListener("click", suppression, true);
     //ajout de paramètre => ici la clef du localStorage
     deleteCanape.clef = canape._id+color;
+    deleteCanape._id = canape._id;
+    deleteCanape.color = color;
     deleteCanape.appendChild(deleteCanapeText);
     canapeDivDel.appendChild(deleteCanape);
     canapeDivQty.appendChild(canapeDivDel);
@@ -149,22 +157,78 @@ function generatePanier(canape,qty,color){
 
 
 //supprimer article panier et on passe en param l'event donc le click sur le texte supprimer
-function suppression(evt){
+async function suppression(evt) {
     //evt fait référence à l'evenement qui a déclenché la fonction donc ici un click
     //evt.currentTarget.clef permet de récupérer la clef qu'on a affecté à l'élément sur lequel on a cliqué
     localStorage.removeItem(evt.currentTarget.clef);
     alert("Le produit a été supprimé du panier.");
-    //rechargement de la page
-    location.reload();
+    //on sélectionne l'article html lié au canapé et on le retire de l'html
+    document.querySelector('article[data-id="' + evt.currentTarget._id + '"][data-color="' + evt.currentTarget.color + '"]').remove();
+    await calculerPrixQty()
 }
 
 //mise à jour qty article
-function updateQty(evt){
+async function updateQty(evt) {
     //récupérer objet du localstorage et le mettre sous forme d'objet pour le modifier
-    let objectParse=JSON.parse(localStorage.getItem(evt.currentTarget.clef));
+    let objectParse = JSON.parse(localStorage.getItem(evt.currentTarget.clef));
     //Parseint pour transformer la chaine de caractère en chiffre
-    objectParse.qty=parseInt(evt.currentTarget.value);
+    objectParse.qty = parseInt(evt.currentTarget.value);
     let JSONObject = JSON.stringify(objectParse);
     localStorage.setItem(evt.currentTarget.clef, JSONObject);
-    location.reload();
+    await calculerPrixQty()
 }
+
+async function calculerPrixQty() {
+    qtyTotal = 0;
+    prixTotal = 0;
+    for (let i = 0; i < localStorage.length; i++) {
+        //Récupération de chaque item grâce à sa clef unique
+        let ligne_de_panier = localStorage.getItem(localStorage.key(i));
+        //utilisation de JSON.parse pour accèder aux valeurs des attributs de l'objet JSON
+        if (typeof ligne_de_panier === "string") {
+
+            let ligne_de_pannier_Parse = JSON.parse(ligne_de_panier);
+            let qty = ligne_de_pannier_Parse['qty'];
+            let id = ligne_de_pannier_Parse['canape']._id;
+
+
+            qtyTotal = qtyTotal + parseInt(qty);
+            //console.log('ajout prix ' + evt.currentTarget.price + '*' + parseInt(qty))
+            prixTotal = prixTotal + (await getPrice(id) * parseInt(qty));
+
+        }
+    }
+
+    let spanQtyTot = document.getElementById("totalQuantity");
+    //innerText permet de modifier directement le texte affiché
+    spanQtyTot.innerText = qtyTotal;
+
+    let spanPrixTot = document.getElementById("totalPrice");
+    //innerText permet de modifier directement le texte affiché
+    spanPrixTot.innerText = prixTotal;
+}
+
+
+/**
+ * Sur le click du bouton commander
+ * Valider le formulaire (champs sont rempli + le champ email contient bien un email
+ * Sinon afficher une erreur sous le champ dans la balise <p> qui va bien
+ * Si tout va bien, valider le contenu du panier en faisant une requete POST /api/order avec le body json suivant
+ *
+ */
+/**
+ *
+ * contact: {
+ *   firstName: string,
+ *   lastName: string,
+ *   address: string,
+ *   city: string,
+ *   email: string
+ * }
+ * products: [string] <-- array of product _id
+ *
+ */
+/**
+ * En cas de reussite l'API retourne un id de commande, qu'il faut afficher sur le page confirmation.html
+ * et rediriger l'utilisateur dessus
+ */
