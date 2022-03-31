@@ -175,6 +175,7 @@ async function updateQty(evt) {
     objectParse.qty = parseInt(evt.currentTarget.value);
     let JSONObject = JSON.stringify(objectParse);
     localStorage.setItem(evt.currentTarget.clef, JSONObject);
+    //await permet d'attendre la fin du traitement de la fonction asynchrone calculerPrix avant de passer à la suite
     await calculerPrixQty()
 }
 
@@ -208,6 +209,68 @@ async function calculerPrixQty() {
     spanPrixTot.innerText = prixTotal;
 }
 
+//Ajout du listener d'action sur le bouton
+let btnValidation = document.getElementById("order");
+//ajout de l'evenement de type click => si click la fonction validationFormulaire() est exécuté
+btnValidation.addEventListener("click", validationFormualaire, true);
+
+function validationFormualaire() {
+    //Prenom
+    let firstName = document.getElementById("firstName").value;
+    let firsNameError = document.getElementById("firstNameErrorMsg");
+    if(firstName.length < 1){
+        firsNameError.innerText="Veuillez renseigner votre Prénom svp";
+    }
+    //On vérifie que le prénom ne contient que des lettres avec une regex
+    else if(/^[A-Za-z]+$/.test(firstName)){
+        firsNameError.innerText="";
+    }
+    else firsNameError.innerText="Un prénom ne peut pas contenir de chiffres";
+
+    //Nom
+    let lastName = document.getElementById("lastName").value;
+    let lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
+    if(lastName.length < 1){
+        lastNameErrorMsg.innerText="Veuillez renseigner votre Nom svp";
+    }
+    //On vérifie que le nom ne contient que des lettres
+    else if(/^[A-Za-z]+$/.test(lastName)){
+        lastNameErrorMsg.innerText="";
+    }
+    else lastNameErrorMsg.innerText="Un nom ne peut pas contenir de chiffres";
+
+    //Adresse
+    let address = document.getElementById("address").value;
+    let addressErrorMsg = document.getElementById("addressErrorMsg");
+    if(address.length < 1){
+        addressErrorMsg.innerText="Veuillez renseigner votre Adresse svp";
+    }
+    else addressErrorMsg.innerText="";
+
+    //Ville
+    let city = document.getElementById("city").value;
+    let cityErrorMsg = document.getElementById("cityErrorMsg");
+    if(city.length < 1){
+        cityErrorMsg.innerText="Veuillez renseigner votre Ville svp";
+    }
+    //On vérifie que la ville ne contient que des lettres
+    else if(/^[A-Za-z]+$/.test(city)){
+        cityErrorMsg.innerText="";
+    }
+    else cityErrorMsg.innerText="Une ville ne peut pas contenir de chiffres";
+
+    //mail
+    let email = document.getElementById("email").value;
+    let emailErrorMsg = document.getElementById("emailErrorMsg");
+    if(email.length < 1){
+        emailErrorMsg.innerText="Veuillez renseigner votre Mail svp";
+    }
+    //On vérifie que le mail contient @
+    else if(/\S+@\S+\.\S+/.test(email)){
+        emailErrorMsg.innerText="";
+    }
+    else emailErrorMsg.innerText="Adresse mail non valide";
+}
 
 /**
  * Sur le click du bouton commander
