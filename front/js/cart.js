@@ -216,6 +216,7 @@ btnValidation.addEventListener("click", validationFormualaire, true);
 
 function validationFormualaire() {
     //Prenom
+    let firstNameOK = false;
     let firstName = document.getElementById("firstName").value;
     let firsNameError = document.getElementById("firstNameErrorMsg");
     if(firstName.length < 1){
@@ -224,10 +225,12 @@ function validationFormualaire() {
     //On vérifie que le prénom ne contient que des lettres avec une regex
     else if(/^[A-Za-z]+$/.test(firstName)){
         firsNameError.innerText="";
+        firstNameOK = true;
     }
     else firsNameError.innerText="Un prénom ne peut pas contenir de chiffres";
 
     //Nom
+    let lastNameOK = false;
     let lastName = document.getElementById("lastName").value;
     let lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
     if(lastName.length < 1){
@@ -236,18 +239,24 @@ function validationFormualaire() {
     //On vérifie que le nom ne contient que des lettres
     else if(/^[A-Za-z]+$/.test(lastName)){
         lastNameErrorMsg.innerText="";
+        lastNameOK = true;
     }
     else lastNameErrorMsg.innerText="Un nom ne peut pas contenir de chiffres";
 
     //Adresse
+    let adresseOK = false;
     let address = document.getElementById("address").value;
     let addressErrorMsg = document.getElementById("addressErrorMsg");
     if(address.length < 1){
         addressErrorMsg.innerText="Veuillez renseigner votre Adresse svp";
     }
-    else addressErrorMsg.innerText="";
+    else {
+        addressErrorMsg.innerText="";
+        adresseOK = true;
+    }
 
     //Ville
+    let cityOk = false;
     let city = document.getElementById("city").value;
     let cityErrorMsg = document.getElementById("cityErrorMsg");
     if(city.length < 1){
@@ -256,10 +265,12 @@ function validationFormualaire() {
     //On vérifie que la ville ne contient que des lettres
     else if(/^[A-Za-z]+$/.test(city)){
         cityErrorMsg.innerText="";
+        cityOk = true;
     }
     else cityErrorMsg.innerText="Une ville ne peut pas contenir de chiffres";
 
     //mail
+    let mailOK = false;
     let email = document.getElementById("email").value;
     let emailErrorMsg = document.getElementById("emailErrorMsg");
     if(email.length < 1){
@@ -268,8 +279,63 @@ function validationFormualaire() {
     //On vérifie que le mail contient @
     else if(/\S+@\S+\.\S+/.test(email)){
         emailErrorMsg.innerText="";
+        mailOK = true;
     }
     else emailErrorMsg.innerText="Adresse mail non valide";
+
+
+    if(firstNameOK && lastNameOK && adresseOK && mailOK && cityOk){
+        requeteValidation(firstName,lastName,address,city,email);
+    }
+}
+
+function requeteValidation(firstName,lastName,address,city,email){
+    let contact={
+        firstName: firstName,
+        lastName: lastName,
+        address: address,
+        city: city,
+        email: email
+    };
+
+    let products = [];
+
+    //On parcours le localStorage pour ajouter les Id de canapé au tableau des produits
+    for( let i = 0; i < localStorage.length; i++){
+        //Récupération de chaque item grâce à sa clef unique
+        let ligne_de_panier = localStorage.getItem(localStorage.key(i));
+        //utilisation de JSON.parse pour accèder aux valeurs des attributs de l'objet JSON
+        if (typeof ligne_de_panier === "string") {
+            let id = ligne_de_pannier_Parse['canape']._id;
+            products.push(id);
+        }
+    }
+
+    //Création objet à envoyer dans le body de la requête avec un objet contact et la liste des id dans un tableau
+    let jsonBody={
+        contact:contact,
+        products:products
+    };
+
+    console.log(jsonBody);
+
+    //Envoi de la requête API de type POST pour envoyer les infos de commande
+    fetch("http://localhost:3000/api/products/order", {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(jsonBody)
+    })
+        .then(function(res) {
+            if (res.ok) {
+                console.log(res.json());
+                return res.json();
+            }
+        })
+        .then(function(value) {
+        });
 }
 
 /**
