@@ -7,3 +7,6 @@ const id = urlParams.get('orderId');
 let spanOrderId = document.getElementById("orderId");
 //on met le numéro de commande dans la span
 spanOrderId.innerText=id;
+
+//vider le localStorage
+window.localStorage.clear();

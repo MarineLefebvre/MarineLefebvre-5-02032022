@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="5af02759-c10c-40a2-9ee3-690364567d50" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/js/confirmation.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/js/confirmation.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="25pJqAcs3Y7neZi4LEHttWpGJwF" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5af02759-c10c-40a2-9ee3-690364567d50" name="Default Changelist" comment="" />
+      <created>1646218282502</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1646218282502</updated>
+      <workItem from="1646218284985" duration="692000" />
+      <workItem from="1646404675427" duration="77000" />
+      <workItem from="1646645741474" duration="529000" />
+      <workItem from="1646646378337" duration="5852000" />
+      <workItem from="1646655986818" duration="1132000" />
+      <workItem from="1646724087416" duration="5245000" />
+      <workItem from="1646812219335" duration="3847000" />
+      <workItem from="1647253326713" duration="2947000" />
+      <workItem from="1647329229549" duration="13660000" />
+      <workItem from="1647528620835" duration="1898000" />
+      <workItem from="1647853604521" duration="29176000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="360" y="196" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1647961027817">
+      <screen x="0" y="25" width="1792" height="1027" />
+    </state>
+    <state x="360" y="196" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1792.1027@0.25.1792.1027" timestamp="1647961027817" />
+    <state x="360" y="196" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1792.1028@0.25.1792.1028" timestamp="1646404700665" />
+    <state x="411" y="137" key="CommitChangelistDialog2" timestamp="1646404717641">
+      <screen x="0" y="25" width="1792" height="1028" />
+    </state>
+    <state x="411" y="137" key="CommitChangelistDialog2/0.25.1792.1028@0.25.1792.1028" timestamp="1646404717641" />
+    <state x="496" y="274" key="Vcs.Push.Dialog.v2" timestamp="1646404728971">
+      <screen x="0" y="25" width="1792" height="1028" />
+    </state>
+    <state x="496" y="274" key="Vcs.Push.Dialog.v2/0.25.1792.1028@0.25.1792.1028" timestamp="1646404728971" />
+    <state x="522" y="333" key="git4idea.merge.GitPullDialog" timestamp="1646404735801">
+      <screen x="0" y="25" width="1792" height="1028" />
+    </state>
+    <state x="522" y="333" key="git4idea.merge.GitPullDialog/0.25.1792.1028@0.25.1792.1028" timestamp="1646404735801" />
+  </component>
+</project>
