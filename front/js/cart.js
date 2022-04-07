@@ -191,7 +191,7 @@ async function calculerPrixQty() {
 
             let ligne_de_pannier_Parse = JSON.parse(ligne_de_panier);
             let qty = ligne_de_pannier_Parse['qty'];
-            let id = ligne_de_pannier_Parse['canape']._id;
+            let id = ligne_de_pannier_Parse['canape'];
 
 
             qtyTotal = qtyTotal + parseInt(qty);
