@@ -1,3 +1,4 @@
+//récupérer l'id de produit depuis l'url
 const url = window.location.search;
 const urlParams = new URLSearchParams (url);
 const id = urlParams.get('id');
@@ -88,7 +89,7 @@ function ajouterAuPanier() {
         else{
             //création objet JSON qui contient le canape, la qty et la couleur
             let object={
-                canape:canape,
+                canape:canape._id,
                 qty:quantityValue,
                 couleur:colorValue
             };
@@ -100,10 +101,5 @@ function ajouterAuPanier() {
         }
 
     }
-
-    /*
-    4. Un utilisateur doit pouvoir modifier une quantité pour un produit donné, donc la ligne du panier doit pouvoir etre identifié par le produit + sa couleur
-    5. afficher un message alrtant l'utilisateur que son produit est bien dans son panier
-     */
 
 }

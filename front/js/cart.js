@@ -13,7 +13,7 @@ for( let i = 0; i < localStorage.length; i++){
         let ligne_de_pannier_Parse = JSON.parse(ligne_de_panier);
         let qty = ligne_de_pannier_Parse['qty'];
         let color = ligne_de_pannier_Parse['couleur'];
-        let id = ligne_de_pannier_Parse['canape']._id;
+        let id = ligne_de_pannier_Parse['canape'];
 
         qtyTotal = qtyTotal+parseInt(qty);
 
@@ -44,6 +44,7 @@ function getInfosOfCanape(id,qty,color){
         });
 
 }
+
 
 async function getPrice(id) {
 
@@ -212,9 +213,11 @@ async function calculerPrixQty() {
 //Ajout du listener d'action sur le bouton
 let btnValidation = document.getElementById("order");
 //ajout de l'evenement de type click => si click la fonction validationFormulaire() est exécuté
-btnValidation.addEventListener("click", validationFormualaire, true);
+btnValidation.addEventListener("click", validationFormualaire, false);
 
-function validationFormualaire() {
+function validationFormualaire(event) {
+
+    event.preventDefault();
     //Prenom
     let firstNameOK = false;
     let firstName = document.getElementById("firstName").value;
@@ -303,10 +306,11 @@ function requeteValidation(firstName,lastName,address,city,email){
     //On parcours le localStorage pour ajouter les Id de canapé au tableau des produits
     for( let i = 0; i < localStorage.length; i++){
         //Récupération de chaque item grâce à sa clef unique
-        let ligne_de_panier = localStorage.getItem(localStorage.key(i));
+        let ligne_de_panier = localStorage.getItem(localStorage.key(i)); //si getItem trouve pas il retourne null
         //utilisation de JSON.parse pour accèder aux valeurs des attributs de l'objet JSON
-        if (typeof ligne_de_panier === "string") {
-            let id = ligne_de_pannier_Parse['canape']._id;
+        if (typeof ligne_de_panier === "string") {  // if(ligne_de_panier != null)
+            let ligne_de_pannier_Parse = JSON.parse(ligne_de_panier)
+            let id = ligne_de_pannier_Parse['canape'];
             products.push(id);
         }
     }
@@ -316,8 +320,6 @@ function requeteValidation(firstName,lastName,address,city,email){
         contact:contact,
         products:products
     };
-
-    console.log(jsonBody);
 
     //Envoi de la requête API de type POST pour envoyer les infos de commande
     fetch("http://localhost:3000/api/products/order", {
@@ -330,34 +332,19 @@ function requeteValidation(firstName,lastName,address,city,email){
     })
         .then(function(res) {
             if (res.ok) {
-                console.log(res.json());
+
                 return res.json();
             }
         })
         .then(function(value) {
+            //On récupère l'order ID
+            let orderId = value.orderId;
+            //On redirige vers la page confirmation en passant en param l'orderId
+            document.location.href="./confirmation.html?orderId="+orderId;
+            /**
+             * Recupérer le orderId dans la reponse
+             * redirigé l'utilisation vers confirmation.html?orderId=.....
+             * afficher le orderId dans la page
+             */
         });
 }
-
-/**
- * Sur le click du bouton commander
- * Valider le formulaire (champs sont rempli + le champ email contient bien un email
- * Sinon afficher une erreur sous le champ dans la balise <p> qui va bien
- * Si tout va bien, valider le contenu du panier en faisant une requete POST /api/order avec le body json suivant
- *
- */
-/**
- *
- * contact: {
- *   firstName: string,
- *   lastName: string,
- *   address: string,
- *   city: string,
- *   email: string
- * }
- * products: [string] <-- array of product _id
- *
- */
-/**
- * En cas de reussite l'API retourne un id de commande, qu'il faut afficher sur le page confirmation.html
- * et rediriger l'utilisateur dessus
- */
