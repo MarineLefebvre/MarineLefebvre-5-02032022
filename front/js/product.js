@@ -94,6 +94,7 @@ function ajouterAuPanier() {
                 couleur:colorValue
             };
 
+            //mise sous forme de chaine de caractere pour stocker
             let JSONObject = JSON.stringify(object);
             //ajout du JSON dans le localStorage avec comme clef canapeCouleur
             localStorage.setItem(canape._id+colorValue,JSONObject);

@@ -9,6 +9,7 @@ fetch("http://localhost:3000/api/products")
     })
     .then(function(value) {
         console.log(value);
+        //value réponse de l'API, stocke donc la liste des canapés dans une var
         listCanape = value;
         generateCardCanape();
     })

@@ -127,7 +127,7 @@ function generatePanier(canape,qty,color){
     canapeDivQty.appendChild(canapeDivQtyContent);
     //Gestion du changement de la qty
     canapeInputQty.addEventListener("change", updateQty);
-    //ajout de paramètre => ici la clef du localStorage
+    //ajout de paramètre => ici la clef du localStorage (mettre a jour le bon élément)
     canapeInputQty.clef = canape._id+color;
     canapeInputQty.price = canape.price;
 
@@ -341,10 +341,5 @@ function requeteValidation(firstName,lastName,address,city,email){
             let orderId = value.orderId;
             //On redirige vers la page confirmation en passant en param l'orderId
             document.location.href="./confirmation.html?orderId="+orderId;
-            /**
-             * Recupérer le orderId dans la reponse
-             * redirigé l'utilisation vers confirmation.html?orderId=.....
-             * afficher le orderId dans la page
-             */
         });
 }
